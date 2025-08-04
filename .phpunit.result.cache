@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":{"Hexlet\\Code\\Tests\\Differ\\DifferTest::testGenDiff":0.013}}
+{"version":1,"defects":{"Hexlet\\Code\\Tests\\Differ\\DifferTest::testGenDiffJson":8,"Hexlet\\Code\\Tests\\Differ\\DifferTest::testGenDiffYaml":8},"times":{"Hexlet\\Code\\Tests\\Differ\\DifferTest::testGenDiff":0.013,"Hexlet\\Code\\Tests\\Differ\\DifferTest::testGenDiffJson":0.015,"Hexlet\\Code\\Tests\\Differ\\DifferTest::testGenDiffYaml":0.002}}

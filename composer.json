@@ -6,7 +6,8 @@
             "Hexlet\\Code\\": "src/"
         },
         "files": [
-            "src/Differ/Differ.php"
+            "src/Differ/Differ.php",
+            "src/Parsers/Parsers.php"
         ]
     },
     "autoload-dev": {
@@ -22,7 +23,8 @@
     ],
     "require": {
         "docopt/docopt": "^1.0",
-        "funct/funct": "^1.6"
+        "funct/funct": "^1.6",
+        "symfony/yaml": "^7.3"
     },
     "repositories": [
         {

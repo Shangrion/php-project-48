@@ -4,10 +4,18 @@ namespace Hexlet\Code;
 
 use Funct\Collection;
 
+use function Hexlet\Code\Parsers\parse;
+
 function genDiff(string $path1, string $path2): string
 {
-    $data1 = json_decode(file_get_contents($path1), true);
-    $data2 = json_decode(file_get_contents($path2), true);
+    $format1 = pathinfo($path1, PATHINFO_EXTENSION);
+    $format2 = pathinfo($path2, PATHINFO_EXTENSION);
+
+    $content1 = file_get_contents($path1);
+    $content2 = file_get_contents($path2);
+
+    $data1 = parse($content1, $format1);
+    $data2 = parse($content2, $format2);
 
     $keys1 = array_keys($data1);
     $keys2 = array_keys($data2);

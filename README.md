@@ -1,6 +1,6 @@
 # gendiff
 
-Утилита для сравнения двух JSON-файлов.
+Утилита для сравнения двух файлов: JSON и YAML.
 
 ## Статус
 
@@ -27,6 +27,23 @@ gendiff file1.json file2.json
 }
 ```
 
+```bash
+gendiff file1.yml file2.yml
+```
+
+**Результат:**
+
+```text
+{
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}
+```
+
 ## Использование как библиотека
 
 ```php
@@ -38,4 +55,5 @@ echo $diff;
 
 ## Демонстрация
 
-[Посмотреть запись терминала](https://asciinema.org/a/GHxlaF9pqT4cP9QVafOnPiy7r)
+[Посмотреть запись терминала JSON](https://asciinema.org/a/GHxlaF9pqT4cP9QVafOnPiy7r)
+[Посмотреть запись терминала YML](https://asciinema.org/a/cmtdsZZudUy4zLSbZwcwG8ySQ)

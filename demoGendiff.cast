@@ -1,9 +1,0 @@
-{"version": 2, "width": 161, "height": 11, "timestamp": 1754283693, "env": {"SHELL": "/bin/bash", "TERM": "xterm-256color"}}
-[0.011227, "o", "\u001b[?2004h\u001b]0;shangrion@shangrion-AORUS: ~/Рабочий стол/2 проект/php-project-48\u0007\u001b[01;32mshangrion@shangrion-AORUS\u001b[00m:\u001b[01;34m~/Рабочий стол/2 проект/php-project-48\u001b[00m$ "]
-[2.75897, "o", "exit"]
-[3.37909, "o", "\b\b\b\basciinema rec demo.cast"]
-[4.358672, "o", "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b./gendiff file1.json file2.json"]
-[5.539071, "o", "\r\n\u001b[?2004l\r"]
-[5.561816, "o", "First file data:\r\nstdClass Object\r\n(\r\n    [host] => hexlet.io\r\n    [timeout] => 50\r\n    [proxy] => 123.234.53.22\r\n    [follow] => \r\n)\r\n\r\nSecond file data:\r\nstdClass Object\r\n(\r\n    [timeout] => 20\r\n    [verbose] => 1\r\n    [host] => hexlet.io\r\n)\r\n"]
-[5.564898, "o", "\u001b[?2004h\u001b]0;shangrion@shangrion-AORUS: ~/Рабочий стол/2 проект/php-project-48\u0007\u001b[01;32mshangrion@shangrion-AORUS\u001b[00m:\u001b[01;34m~/Рабочий стол/2 проект/php-project-48\u001b[00m$ "]
-[9.049018, "o", "\u001b[?2004l\r\r\nexit\r\n"]
