@@ -19,3 +19,18 @@ Options:
 DOC;
 
 $arguments = Docopt::handle($doc, ['version' => 'gendiff 1.0']);
+
+$firstFile = $arguments['<firstFile>'];
+$secondFile = $arguments['<secondFile>'];
+
+$firstData = file_get_contents($firstFile);
+$secondData = file_get_contents($secondFile);
+
+$data1 = json_decode($firstData);
+$data2 = json_decode($secondData);
+
+echo "First file data:\n";
+print_r($data1);
+
+echo "\nSecond file data:\n";
+print_r($data2);
