@@ -4,7 +4,7 @@ namespace Hexlet\Code;
 
 use Funct\Collection;
 
-function genDiff($path1, $path2)
+function genDiff(string $path1, string $path2): string
 {
     $data1 = json_decode(file_get_contents($path1), true);
     $data2 = json_decode(file_get_contents($path2), true);
@@ -12,15 +12,18 @@ function genDiff($path1, $path2)
     $keys1 = array_keys($data1);
     $keys2 = array_keys($data2);
     $allKeys = Collection\union($keys1, $keys2);
-    $sortedKeys = Collection\sortBy($allKeys, function ($key) { return $key; });
+    $sortedKeys = Collection\sortBy($allKeys, fn($key) => $key);
 
     $lines = [];
     foreach ($sortedKeys as $key) {
-        if (array_key_exists($key, $data1) && !array_key_exists($key, $data2)) {
+        $inFirst = array_key_exists($key, $data1);
+        $inSecond = array_key_exists($key, $data2);
+
+        if ($inFirst && !$inSecond) {
             $lines[] = "  - {$key}: " . renderValue($data1[$key]);
-        } elseif (!array_key_exists($key, $data1) && array_key_exists($key, $data2)) {
+        } elseif (!$inFirst && $inSecond) {
             $lines[] = "  + {$key}: " . renderValue($data2[$key]);
-        } elseif ($data1[$key] !== $data2[$key]) {
+        } elseif ($inFirst && $inSecond && $data1[$key] !== $data2[$key]) {
             $lines[] = "  - {$key}: " . renderValue($data1[$key]);
             $lines[] = "  + {$key}: " . renderValue($data2[$key]);
         } else {
@@ -31,16 +34,12 @@ function genDiff($path1, $path2)
     return "{\n" . implode("\n", $lines) . "\n}";
 }
 
-function renderValue($value)
+function renderValue($value): string
 {
-    if ($value === true) {
-        return 'true';
-    }
-    if ($value === false) {
-        return 'false';
-    }
-    if ($value === null) {
-        return 'null';
-    }
-    return $value;
+    return match (true) {
+        $value === true => 'true',
+        $value === false => 'false',
+        $value === null => 'null',
+        default => (string) $value,
+    };
 }
