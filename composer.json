@@ -13,6 +13,13 @@
         }
     ],
     "require": {
-        "docopt/docopt": "^1.0"
-    }
+        "docopt/docopt": "^1.0",
+        "funct/funct": "^1.6"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/phpfunct/funct"
+        }
+    ]
 }
