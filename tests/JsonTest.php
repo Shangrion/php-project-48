@@ -13,7 +13,7 @@ class JsonTest extends TestCase
         $diff = [
             ['key' => 'host', 'type' => 'unchanged', 'value' => 'hexlet.io'],
             ['key' => 'timeout', 'type' => 'changed', 'oldValue' => 50, 'newValue' => 20],
-            ['key' => 'proxy', 'type' => 'removed', 'value' => '127.0.0.1'],
+            ['key' => 'proxy', 'type' => 'removed', 'value' => '123.234.53.22'],
             ['key' => 'verbose', 'type' => 'added', 'value' => true],
         ];
 
