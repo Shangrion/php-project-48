@@ -1,0 +1,44 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+use function Hexlet\Code\genDiff;
+
+$doc = <<<DOC
+Generate diff
+
+Usage:
+  gendiff (-h|--help)
+  gendiff (-v|--version)
+  gendiff [--format <fmt>] <firstFile> <secondFile>
+
+Options:
+  -h --help                     Show this screen
+  -v --version                  Show version
+  --format <fmt>                Report format [default: stylish]
+DOC;
+
+$args = Docopt::handle($doc, ['version' => '1.0.0']);
+
+function parseFile(string $filepath): array
+{
+    if (!file_exists($filepath)) {
+        fwrite(STDERR, "File not found: {$filepath}\n");
+        exit(1);
+    }
+
+    $content = file_get_contents($filepath);
+    $data = json_decode($content, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        fwrite(STDERR, "Error parsing JSON from file: {$filepath}\n");
+        exit(1);
+    }
+
+    return $data;
+}
+
+if (isset($args['<firstFile>']) && isset($args['<secondFile>'])) {
+  $format = $args['--format'] ?? 'stylish';
+  $diff = genDiff($args['<firstFile>'], $args['<secondFile>'], $format);
+  print_r($diff);
+}
