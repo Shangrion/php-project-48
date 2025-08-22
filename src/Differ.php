@@ -66,11 +66,17 @@ function buildDiffNode(string $key, array $data1, array $data2): array
 
 function sortKeysFunctional(array $keys): array
 {
-    $result = [];
-    foreach ($keys as $key) {
-        $before = array_filter($result, fn($k) => $k < $key);
-        $after = array_filter($result, fn($k) => $k >= $key);
-        $result = array_merge($before, [$key], $after);
+    if (count($keys) <= 1) {
+        return $keys;
     }
-    return $result;
+
+    $pivot = $keys[0];
+    $less = array_filter(array_slice($keys, 1), fn($k) => $k < $pivot);
+    $greater = array_filter(array_slice($keys, 1), fn($k) => $k >= $pivot);
+
+    return array_merge(
+        sortKeysFunctional($less),
+        [$pivot],
+        sortKeysFunctional($greater)
+    );
 }
