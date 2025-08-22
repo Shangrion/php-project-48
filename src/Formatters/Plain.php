@@ -4,67 +4,40 @@ namespace Hexlet\Code\Formatters;
 
 function formatPlain(array $diff): string
 {
-    $lines = buildPlainOutput($diff);
-    return implode("\n", $lines);
+    return implode("\n", buildPlainOutput($diff));
 }
 
 function buildPlainOutput(array $diff, string $parentPath = ''): array
 {
-    $lines = [];
+    return array_merge(...array_map(
+        fn($node) => formatPlainNode($node, $parentPath),
+        $diff
+    ));
+}
 
-    foreach ($diff as $node) {
-        $key = $node['key'];
-        $type = $node['type'];
-        $propertyPath = $parentPath === '' ? $key : "{$parentPath}.{$key}";
+function formatPlainNode(array $node, string $parentPath): array
+{
+    $key = $node['key'];
+    $type = $node['type'];
+    $propertyPath = $parentPath === '' ? $key : "{$parentPath}.{$key}";
 
-        switch ($type) {
-            case 'added':
-                $value = formatValue($node['value']);
-                $lines[] = "Property '{$propertyPath}' was added with value: {$value}";
-                break;
-
-            case 'removed':
-                $lines[] = "Property '{$propertyPath}' was removed";
-                break;
-
-            case 'changed':
-                $oldValue = formatValue($node['oldValue']);
-                $newValue = formatValue($node['newValue']);
-                $lines[] = "Property '{$propertyPath}' was updated. From {$oldValue} to {$newValue}";
-                break;
-
-            case 'nested':
-                $lines = array_merge($lines, buildPlainOutput($node['children'], $propertyPath));
-                break;
-
-            case 'unchanged':
-                break;
-
-            default:
-                throw new \Exception("Unknown node type: {$type}");
-        }
-    }
-
-    return $lines;
+    return match ($type) {
+        'added' => ["Property '{$propertyPath}' was added with value: " . formatValue($node['value'])],
+        'removed' => ["Property '{$propertyPath}' was removed"],
+        'changed' => ["Property '{$propertyPath}' was updated. From " . formatValue($node['oldValue']) . " to " . formatValue($node['newValue'])],
+        'nested' => buildPlainOutput($node['children'], $propertyPath),
+        'unchanged' => [],
+        default => throw new \Exception("Unknown node type: {$type}"),
+    };
 }
 
 function formatValue(mixed $value): string
 {
-    if (is_array($value)) {
-        return '[complex value]';
-    }
-
-    if (is_bool($value)) {
-        return $value ? 'true' : 'false';
-    }
-
-    if ($value === null) {
-        return 'null';
-    }
-
-    if (is_string($value)) {
-        return "'{$value}'";
-    }
-
-    return (string) $value;
+    return match (true) {
+        is_array($value) => '[complex value]',
+        is_bool($value) => $value ? 'true' : 'false',
+        $value === null => 'null',
+        is_string($value) => "'{$value}'",
+        default => (string) $value,
+    };
 }

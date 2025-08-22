@@ -5,49 +5,33 @@ namespace Hexlet\Code\Formatters;
 function formatStylish(array $diff, int $depth = 1): string
 {
     $indentSize = 4;
-    $innerIndent = str_repeat(' ', $depth * $indentSize);
     $bracketIndent = str_repeat(' ', ($depth - 1) * $indentSize);
 
-    $lines = [];
+    $lines = array_map(
+        fn($node) => formatNode($node, $depth, $indentSize),
+        $diff
+    );
 
-    foreach ($diff as $node) {
-        $key = $node['key'];
-        $type = $node['type'];
+    return "{\n" . implode("\n", array_merge(...$lines)) . "\n{$bracketIndent}}";
+}
 
-        switch ($type) {
-            case 'added':
-                $value = toString($node['value'], $depth + 1);
-                $lines[] = str_repeat(' ', $depth * $indentSize - 2) . "+ {$key}: {$value}";
-                break;
+function formatNode(array $node, int $depth, int $indentSize): array
+{
+    $innerIndent = str_repeat(' ', $depth * $indentSize);
+    $key = $node['key'];
+    $type = $node['type'];
 
-            case 'removed':
-                $value = toString($node['value'], $depth + 1);
-                $lines[] = str_repeat(' ', $depth * $indentSize - 2) . "- {$key}: {$value}";
-                break;
-
-            case 'unchanged':
-                $value = toString($node['value'], $depth + 1);
-                $lines[] = "{$innerIndent}{$key}: {$value}";
-                break;
-
-            case 'changed':
-                $oldValue = toString($node['oldValue'], $depth + 1);
-                $newValue = toString($node['newValue'], $depth + 1);
-                $lines[] = str_repeat(' ', $depth * $indentSize - 2) . "- {$key}: {$oldValue}";
-                $lines[] = str_repeat(' ', $depth * $indentSize - 2) . "+ {$key}: {$newValue}";
-                break;
-
-            case 'nested':
-                $children = formatStylish($node['children'], $depth + 1);
-                $lines[] = "{$innerIndent}{$key}: {$children}";
-                break;
-
-            default:
-                throw new \Exception("Unknown node type: {$type}");
-        }
-    }
-
-    return "{\n" . implode("\n", $lines) . "\n{$bracketIndent}}";
+    return match ($type) {
+        'added' => [str_repeat(' ', $depth * $indentSize - 2) . "+ {$key}: " . toString($node['value'], $depth + 1)],
+        'removed' => [str_repeat(' ', $depth * $indentSize - 2) . "- {$key}: " . toString($node['value'], $depth + 1)],
+        'unchanged' => ["{$innerIndent}{$key}: " . toString($node['value'], $depth + 1)],
+        'changed' => [
+            str_repeat(' ', $depth * $indentSize - 2) . "- {$key}: " . toString($node['oldValue'], $depth + 1),
+            str_repeat(' ', $depth * $indentSize - 2) . "+ {$key}: " . toString($node['newValue'], $depth + 1)
+        ],
+        'nested' => ["{$innerIndent}{$key}: " . formatStylish($node['children'], $depth + 1)],
+        default => throw new \Exception("Unknown node type: {$type}"),
+    };
 }
 
 function toString(mixed $value, int $depth): string
@@ -66,14 +50,14 @@ function toString(mixed $value, int $depth): string
         return (string)$value;
     }
 
-    $lines = [];
     $currentIndent = str_repeat(' ', $depth * $indentSize);
     $closingIndent = str_repeat(' ', ($depth - 1) * $indentSize);
 
-    foreach ($value as $key => $val) {
-        $valStr = toString($val, $depth + 1);
-        $lines[] = "{$currentIndent}{$key}: {$valStr}";
-    }
+    $lines = array_map(
+        fn($k, $v) => "{$currentIndent}{$k}: " . toString($v, $depth + 1),
+        array_keys($value),
+        array_values($value)
+    );
 
     return "{\n" . implode("\n", $lines) . "\n{$closingIndent}}";
 }
