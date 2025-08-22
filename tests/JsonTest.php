@@ -13,7 +13,7 @@ class JsonTest extends TestCase
         $diff = [
             ['key' => 'host', 'type' => 'unchanged', 'value' => 'hexlet.io'],
             ['key' => 'timeout', 'type' => 'changed', 'oldValue' => 50, 'newValue' => 20],
-            ['key' => 'proxy', 'type' => 'removed', 'value' => '123.234.53.22'],
+            ['key' => 'proxy', 'type' => 'removed', 'value' => 'localhost'], // заменили IP
             ['key' => 'verbose', 'type' => 'added', 'value' => true],
         ];
 
@@ -33,7 +33,7 @@ class JsonTest extends TestCase
     {
         "key": "proxy",
         "type": "removed",
-        "value": "123.234.53.22"
+        "value": "localhost"
     },
     {
         "key": "verbose",
