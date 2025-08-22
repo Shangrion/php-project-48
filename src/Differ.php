@@ -2,7 +2,7 @@
 
 namespace Differ\Differ;
 
-use function Hexlet\Code\parseFile;
+use function Hexlet\Code\Parsers\parseFile;
 use function Hexlet\Code\Formatters\format;
 
 function genDiff(string $pathToFile1, string $pathToFile2, string $formatName = 'stylish'): string
@@ -17,10 +17,10 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $formatName = 
 
 function buildDiff(array $data1, array $data2): array
 {
-    $allKeys = [...array_keys($data1), ...array_keys($data2)];
-    $allKeys = array_values(array_unique($allKeys));
-    $allKeysSorted = [...$allKeys];
-    usort($allKeysSorted, fn($a, $b) => $a <=> $b);
+    $allKeys = array_values(array_unique([...array_keys($data1), ...array_keys($data2)]));
+    $allKeysSorted = array_merge([], $allKeys);
+    $allKeysSorted = array_map(fn($v) => $v, $allKeysSorted);
+    sort($allKeysSorted); // сортировка без мутации оригинального массива
 
     return array_map(
         fn(string $key) => buildDiffNode($key, $data1, $data2),
