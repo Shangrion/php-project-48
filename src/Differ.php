@@ -1,6 +1,6 @@
 <?php
 
-namespace Hexlet\Code;
+namespace Differ\Differ;
 
 use function Hexlet\Code\parseFile;
 use function Hexlet\Code\Formatters\format;
