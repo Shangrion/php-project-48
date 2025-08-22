@@ -30,7 +30,9 @@ jobs:
           restore-keys: php-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: |
+          composer install --prefer-dist --no-progress
+          composer dump-autoload
 
       - name: Run linter
         run: make lint
