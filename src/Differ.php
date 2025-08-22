@@ -19,8 +19,8 @@ function buildDiff(array $data1, array $data2): array
 {
     $allKeys = array_merge(array_keys($data1), array_keys($data2));
     $uniqueKeys = array_unique($allKeys);
-    $sortedKeys = [...$uniqueKeys];
-    sort($sortedKeys);
+    $sortedKeys = $uniqueKeys;
+    sort($sortedKeys, SORT_STRING);
 
     return array_map(
         fn(string $key) => buildDiffNode($key, $data1, $data2),
