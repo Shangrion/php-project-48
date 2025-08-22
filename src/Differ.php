@@ -17,10 +17,8 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $formatName = 
 
 function buildDiff(array $data1, array $data2): array
 {
-    $allKeys = array_merge(array_keys($data1), array_keys($data2));
-    $uniqueKeys = array_unique($allKeys);
-    $sortedKeys = $uniqueKeys;
-    sort($sortedKeys, SORT_STRING);
+    $allKeys = array_unique(array_merge(array_keys($data1), array_keys($data2)));
+    $sortedKeys = functionalSort($allKeys);
 
     return array_map(
         fn(string $key) => buildDiffNode($key, $data1, $data2),
@@ -64,4 +62,11 @@ function buildDiffNode(string $key, array $data1, array $data2): array
             'value' => $value1,
         ],
     };
+}
+
+function functionalSort(array $array): array
+{
+    $copy = $array;
+    sort($copy, SORT_STRING);
+    return $copy;
 }
