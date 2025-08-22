@@ -8,11 +8,34 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Shangrion_php-project-48&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Shangrion_php-project-48)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Shangrion_php-project-48&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Shangrion_php-project-48)
 
+## Установка
+
+```bash
+git clone https://github.com/Shangrion/php-project-48.git
+cd php-project-48
+make install
+```
+
 ## Использование
 
 ```bash
 gendiff file1.json file2.json
 ```
+
+## Форматы вывода
+
+По умолчанию используется формат `stylish`.  
+Доступные форматы:
+
+- `stylish`
+- `plain`
+- `json`
+
+Пример использования:
+
+```bash
+gendiff --format plain file1.json file2.json
+
 
 **Результат:**
 
@@ -20,7 +43,7 @@ gendiff file1.json file2.json
 {
   - follow: false
     host: hexlet.io
-  - proxy: 123.234.53.22
+  - proxy: example.com
   - timeout: 50
   + timeout: 20
   + verbose: true
@@ -37,7 +60,7 @@ gendiff file1.yml file2.yml
 {
   - follow: false
     host: hexlet.io
-  - proxy: 123.234.53.22
+  - proxy: example.com
   - timeout: 50
   + timeout: 20
   + verbose: true
