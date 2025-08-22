@@ -8,9 +8,16 @@ function parseFile(string $path): array
 {
     $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-    return match ($extension) {
-        'yml', 'yaml' => Yaml::parseFile($path) ?: [],
-        'json' => json_decode(file_get_contents($path) ?: '', true, 512, JSON_THROW_ON_ERROR),
-        default => throw new \Exception("Unsupported file extension: {$extension}"),
-    };
+    if (in_array($extension, ['yml', 'yaml'], true)) {
+        $parsed = Yaml::parseFile($path);
+        return is_array($parsed) ? $parsed : [];
+    }
+
+    if ($extension === 'json') {
+        $content = file_get_contents($path);
+        $parsed = json_decode($content, true);
+        return is_array($parsed) ? $parsed : [];
+    }
+
+    throw new \Exception("Unsupported file extension: {$extension}");
 }
